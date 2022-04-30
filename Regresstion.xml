@@ -5,6 +5,5 @@
         <classes>
             <class name="openBrowser"/>
         </classes>
-
     </test>
 </suite>

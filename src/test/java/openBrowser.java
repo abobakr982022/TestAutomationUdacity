@@ -12,19 +12,7 @@ import org.testng.asserts.SoftAssert;
 public class openBrowser {
     WebDriver driver = null;
     SoftAssert soft = new SoftAssert();
-
-public WebElement usernameEl(){
-    By usernamee = By.name("username");
-    WebElement username = driver.findElement(usernamee);
-    return username;
-}
-
-public WebElement passwordEl(){
-    By passwordd = By.name("password");
-    WebElement password= driver.findElement(passwordd);
-    return password;
-}
-
+    loginTest login = new loginTest();
     @BeforeTest
     public void openBrowser() throws InterruptedException {
         String chromeDriverPath= System.getProperty("user.dir")+"\\src\\main\\resources\\browsers\\chromedriver.exe";
@@ -46,11 +34,11 @@ public WebElement passwordEl(){
     public void validTest() throws InterruptedException {
 
         driver.navigate().to("https://the-internet.herokuapp.com/login");
-        usernameEl().clear();
-        passwordEl().clear();
-        usernameEl().sendKeys("tomsmith");
-        passwordEl().sendKeys("SuperSecretPassword!");
-        passwordEl().sendKeys(Keys.ENTER);
+        login.usernameEl(driver).clear();
+        login.passwordEl(driver).clear();
+        login.usernameEl(driver).sendKeys("tomsmith");
+        login.passwordEl(driver).sendKeys("SuperSecretPassword!");
+        login.passwordEl(driver).sendKeys(Keys.ENTER);
         Thread.sleep(3000);
         String expectedValue = " You logged into a secure area!";
         String actualValue = driver.findElement(By.id("flash")).getText();
@@ -71,11 +59,11 @@ public WebElement passwordEl(){
     @Test(priority = 2)
     public void invalidTest() throws InterruptedException {
         driver.navigate().to("https://the-internet.herokuapp.com/login");
-        usernameEl().clear();
-        passwordEl().clear();
-        usernameEl().sendKeys("tttt");
-        passwordEl().sendKeys("Super");
-        passwordEl().sendKeys(Keys.ENTER);
+        login.usernameEl(driver).clear();
+        login.passwordEl(driver).clear();
+        login.usernameEl(driver).sendKeys("tttt");
+        login.passwordEl(driver).sendKeys("Super");
+        login.passwordEl(driver).sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
 
