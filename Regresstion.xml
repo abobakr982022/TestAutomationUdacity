@@ -4,7 +4,6 @@
     <test name="Regression1">
         <classes>
             <class name="openBrowser"/>
-
         </classes>
     </test>
 </suite>
