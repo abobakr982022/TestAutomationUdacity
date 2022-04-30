@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -9,9 +10,21 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class openBrowser {
+    WebDriver driver = null;
+    SoftAssert soft = new SoftAssert();
 
+public WebElement usernameEl(){
+    By usernamee = By.name("username");
+    WebElement username = driver.findElement(usernamee);
+    return username;
+}
 
-     WebDriver driver = null;
+public WebElement passwordEl(){
+    By passwordd = By.name("password");
+    WebElement password= driver.findElement(passwordd);
+    return password;
+}
+
     @BeforeTest
     public void openBrowser() throws InterruptedException {
         String chromeDriverPath= System.getProperty("user.dir")+"\\src\\main\\resources\\browsers\\chromedriver.exe";
@@ -28,15 +41,16 @@ public class openBrowser {
         Thread.sleep(3000);
 
     }
-    SoftAssert soft = new SoftAssert();
+
     @Test (priority = 1)
     public void validTest() throws InterruptedException {
+
         driver.navigate().to("https://the-internet.herokuapp.com/login");
-        driver.findElement(By.name("username")).clear();
-        driver.findElement(By.name("password")).clear();
-        driver.findElement(By.name("username")).sendKeys("tomsmith");
-        driver.findElement(By.name("password")).sendKeys("SuperSecretPassword!");
-        driver.findElement(By.name("password")).sendKeys(Keys.ENTER);
+        usernameEl().clear();
+        passwordEl().clear();
+        usernameEl().sendKeys("tomsmith");
+        passwordEl().sendKeys("SuperSecretPassword!");
+        passwordEl().sendKeys(Keys.ENTER);
         Thread.sleep(3000);
         String expectedValue = " You logged into a secure area!";
         String actualValue = driver.findElement(By.id("flash")).getText();
@@ -52,19 +66,16 @@ public class openBrowser {
         //Third Assertion
         System.out.println("Third Assertion");
         soft.assertTrue(driver.getCurrentUrl().contains("the-internet.herokuapp.com/secure"),"Third Assertion");
-
-
-
     }
 
     @Test(priority = 2)
     public void invalidTest() throws InterruptedException {
         driver.navigate().to("https://the-internet.herokuapp.com/login");
-        driver.findElement(By.name("username")).clear();
-        driver.findElement(By.name("password")).clear();
-        driver.findElement(By.name("username")).sendKeys("tttt");
-        driver.findElement(By.name("password")).sendKeys("Super");
-        driver.findElement(By.name("password")).sendKeys(Keys.ENTER);
+        usernameEl().clear();
+        passwordEl().clear();
+        usernameEl().sendKeys("tttt");
+        passwordEl().sendKeys("Super");
+        passwordEl().sendKeys(Keys.ENTER);
         Thread.sleep(3000);
 
 
@@ -73,6 +84,5 @@ public class openBrowser {
     @AfterTest
     public void closeBrowser(){
         driver.quit();
-
     }
 }
